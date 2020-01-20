@@ -19,10 +19,10 @@
         },
         {
             "type": "shell",
-            "label": "make lexer",
+            "label": "make ido_main",
             "command": "/usr/bin/make",
             "args": [
-                "lexer.out"
+                "ido.out"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -33,22 +33,6 @@
                 "isDefault": true
             }
         },
-        {
-            "type": "shell",
-            "label": "make parser",
-            "command": "/usr/bin/make",
-            "args": [
-                "parser.out"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": "$gcc",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        }
     ],
     "version": "2.0.0"
 }

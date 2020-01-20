@@ -5,12 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "main",
+            "name": "ido_main",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/main.out",
+            "program": "${workspaceRoot}/ido.out",
             "args": [
-                "fly.txt"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
@@ -24,7 +23,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "make main",
+            "preLaunchTask": "make ido_main",
             "miDebuggerPath": "/usr/bin/gdb",
             "sourceFileMap": {
                 "/build/glibc-B9XfQf": "/usr/src/glibc"
