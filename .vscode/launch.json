@@ -5,11 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "ido_main",
+            "name": "main",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/main.out",
+            "program": "${workspaceRoot}/build/main.out",
             "args": [
+                "5600"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
