@@ -1,37 +1,42 @@
-# DEFINE DATA DIR #################################################################################
-PROJECT_DATA_DIR=Project_Data
-
 # COMPILATION #####################################################################################
-ifndef file #sets default for 'file' variable.
-override file=fly.txt
-endif
+SRC_DIRS=	src
+BUILD_DIR=	build
 
-COMPILER=g++
-CFLAGS= -ggdb3 -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
-MAIN_DIR=.
-clean:
-	@rm -fr ./*.out */*.o *.o
+SRCS:=	$(shell find $(SRC_DIRS) -mindepth 1 -name *.cpp)
+OBJS:=	$(subst $(SRC_DIRS),$(BUILD_DIR),$(SRCS:%=%.o))
+DEPS:=	$(OBJS:.o=.d)
 
-%.o : %.cpp
-	g++ -g -o $@ -c $< $(CFLAGS)
+COMPILER=	g++
+DEBUG_FLAG= -ggdb3
+COMP_FLAGS= $(DEBUG_FLAG) -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
+INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_FLAGS := $(addprefix -I,$(INC_DIRS)) -MMD -MP
+CPPFLAGS:=	$(INC_FLAGS) $(COMP_FLAGS)
 
-# DEPENDENCIES ####################################################################################
-ALL_DEPENDENCIES = $(foreach d, .... ,$(d).o)
-_DEPENDENCIES_IDO = server_side/serial_server client_handler/test_client_handler cache_manager/file_cache_manager solver/string_reverser
+$(BUILD_DIR)/%.cpp.o:$(SRC_DIRS)/%.cpp
+	@mkdir -p $(dir $@)
+	@echo -n "[ ] Compiling ($(COMPILER)) $@\r"
+	@$(COMPILER) -g -c $< -o $@ $(CPPFLAGS)
+	@echo "[X] Compiling ($(COMPILER)) $@"
 
-# IDO (Ido) ###############################################################################
-OUTFILE_IDO = ido.out
-DEPENDENCIES_IDO = $(foreach d,$(_DEPENDENCIES_IDO),$(d).o) ido.cpp
+$(BUILD_DIR)/%.out:$(OBJS)
+	@mkdir -p $(dir $@)
+	@echo -n "[ ] Compiling $@\r"
+	@$(COMPILER) $(OBJS) -o $@ $(CPPFLAGS)
+	@echo "[X] Compiling $@"
 
-$(OUTFILE_IDO):$(DEPENDENCIES_IDO)
-	$(COMPILER) $(DEPENDENCIES_IDO) $(CFLAGS) -o $(OUTFILE_IDO)
-# MAIN (Ido) ######################################################################################
-OUTFILE_MAIN=main.out
+-include $(DEPS)
+# CONSTANTS #######################################################################################
+FILE_CACHE_DATA_DIR = cache_manager/file_cache_data/
 
-$(OUTFILE_MAIN):$(DEPENDENCIES_MAIN)
-	$(COMPILER) $(DEPENDENCIES_MAIN) $(CFLAGS) -o $(OUTFILE_MAIN)
+# EXTRA TARGETS ###################################################################################
+.PHONY: clean
+clean: clean_cache
+	@rm -rf $(BUILD_DIR)
 
-main: $(OUTFILE_MAIN)
-	./$(OUTFILE_MAIN) $(file)
+.PHONY: clean_cache
+clean_cache:
+	@rm -rf $(FILE_CACHE_DATA_DIR)
+
 
 

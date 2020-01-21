@@ -16,18 +16,25 @@ void MySerialServer::open(int port, IClientHandler *c)
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY; //give me any IP allocated for my machine
     address.sin_port = htons(port);
-    //we need to convert our number
-    // to a number that the network understands.
-
+    struct timeval tv
+    {
+        30, 0
+    };
+    tv.tv_sec = 30;
+    tv.tv_usec = 0;
+    setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof tv);
     //the actual bind command
     double wait_time = 0.7;
-    int i = 0;
+    bool __please_wait = true;
     while (bind(socketfd, (struct sockaddr *)&address, sizeof(address)) == -1)
     {
-        cout << i++ << "...\r";
+        if (__please_wait)
+        {
+            cout << "please wait up to 60 seconds in order to bind the connection." << endl;
+            __please_wait = 0;
+        }
         sleep(wait_time);
     }
-    cout << "Now waiting for client..." << endl;
     isOpen = true;
     auto server_listen_thread = thread(&MySerialServer::serverListen, this, &address, socketfd, c);
     server_listen_thread.detach();
@@ -43,10 +50,11 @@ void MySerialServer::serverListen(sockaddr_in *address, int socketfd, IClientHan
     {
         while (isOpen)
         {
+            cout << "Now listening for connection." << endl;
             //making socket listen to the port
             if (listen(socketfd, 5) == -1)
             {
-                std::cerr << "Error during listening command" << std::endl;
+                std::cerr << "Error during listening command: " << errno << std::endl;
                 return;
             }
             // accepting a client
@@ -54,7 +62,15 @@ void MySerialServer::serverListen(sockaddr_in *address, int socketfd, IClientHan
             int client_socket = accept(socketfd, socket_addr, (socklen_t *)address);
             if (client_socket == -1)
             {
-                std::cerr << "Error accepting client: " << errno << std::endl;
+                switch (errno)
+                {
+                case 4:
+                    //this means time-out.
+                    break;
+                default:
+                    std::cerr << "Error accepting client: " << errno << std::endl;
+                    break;
+                }
                 continue;
             }
             handler->handleClient(client_socket);

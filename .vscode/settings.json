@@ -55,6 +55,7 @@
         "ctime": "cpp",
         "ratio": "cpp",
         "mutex": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "bitset": "cpp"
     },
 }
