@@ -1,33 +1,35 @@
+# CONSTANTS #######################################################################################
+FILE_CACHE_DATA_DIR= ./cached_data/
+
 # COMPILATION #####################################################################################
+TARGETS=main lexer
 SRC_DIRS=	src
 BUILD_DIR=	build
 
 SRCS:=	$(shell find $(SRC_DIRS) -mindepth 1 -name *.cpp)
-OBJS:=	$(subst $(SRC_DIRS),$(BUILD_DIR),$(SRCS:%=%.o))
+OBJS:=	$(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS:=	$(OBJS:.o=.d)
 
-COMPILER=	g++
-DEBUG_FLAG= -ggdb3
-COMP_FLAGS= $(DEBUG_FLAG) -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
-INC_DIRS := $(shell find $(SRC_DIRS) -type d)
-INC_FLAGS := $(addprefix -I,$(INC_DIRS)) -MMD -MP
-CPPFLAGS:=	$(INC_FLAGS) $(COMP_FLAGS)
+COMPILER=		g++
+DEBUG_FLAG= 	-ggdb3
+COMP_FLAGS= 	$(DEBUG_FLAG) -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
+INC_DIRS := 	$(shell find $(SRC_DIRS) -type d)
+INC_FLAGS :=	$(addprefix -I,$(INC_DIRS)) -MMD -MP
+CPPFLAGS:=		$(INC_FLAGS) $(COMP_FLAGS)
 
-$(BUILD_DIR)/%.cpp.o:$(SRC_DIRS)/%.cpp
+$(BUILD_DIR)/%.cpp.o:%.cpp
 	@mkdir -p $(dir $@)
-	@echo -n "[ ] Compiling ($(COMPILER)) $@\r"
+	@echo -n "[ ] $@\r"
 	@$(COMPILER) -g -c $< -o $@ $(CPPFLAGS)
-	@echo "[X] Compiling ($(COMPILER)) $@"
+	@echo "[X"
 
-$(BUILD_DIR)/%.out:$(OBJS)
+$(BUILD_DIR)/$(TARGETS).out:$(OBJS)
 	@mkdir -p $(dir $@)
-	@echo -n "[ ] Compiling $@\r"
+	@echo -n "[ ] $@\r"
 	@$(COMPILER) $(OBJS) -o $@ $(CPPFLAGS)
-	@echo "[X] Compiling $@"
+	@echo -n "[X\n\r"
 
 -include $(DEPS)
-# CONSTANTS #######################################################################################
-FILE_CACHE_DATA_DIR = cache_manager/file_cache_data/
 
 # EXTRA TARGETS ###################################################################################
 .PHONY: clean
@@ -38,5 +40,4 @@ clean: clean_cache
 clean_cache:
 	@rm -rf $(FILE_CACHE_DATA_DIR)
 
-
-
+###################################################################################################

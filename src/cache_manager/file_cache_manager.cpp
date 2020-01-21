@@ -6,7 +6,7 @@ FileCacheManager::FileCacheManager()
     struct stat buffer;
     if (stat(FILE_CACHE_MANAGER_DIRNAME, &buffer) != 0)
     {
-        mkdir(FILE_CACHE_MANAGER_DIRNAME, 0777);
+        mkdir(FILE_CACHE_MANAGER_DIRNAME,0777);
     }
 }
 bool FileCacheManager::isCached(string problem)

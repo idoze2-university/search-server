@@ -1,7 +1,7 @@
 #ifndef FILE_CACHE_MANAGER
 #define FILE_CACHE_MANAGER
 #define BUFFSIZE 1024
-#define FILE_CACHE_MANAGER_DIRNAME "cache_manager/file_cache_data/"
+#define FILE_CACHE_MANAGER_DIRNAME "cached_data/"
 #define FILE_CACHE_MANAGER_SOLUTION_EXTENSION ".solu"
 #include "cache_manager.h"
 #include <sys/stat.h>

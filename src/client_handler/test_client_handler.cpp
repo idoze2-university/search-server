@@ -18,7 +18,6 @@ void MyTestClientHandler::handleClient(int client_socket)
         if (!problem.compare("end"))
             break;
         string solution;
-
         if (cm->isCached(problem))
         {
             solution = cm->getSolution(problem);
