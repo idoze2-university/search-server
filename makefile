@@ -2,7 +2,6 @@
 FILE_CACHE_DATA_DIR= ./cached_data/
 
 # COMPILATION #####################################################################################
-TARGETS=main lexer
 SRC_DIRS=	src
 BUILD_DIR=	build
 
@@ -17,17 +16,18 @@ INC_DIRS := 	$(shell find $(SRC_DIRS) -type d)
 INC_FLAGS :=	$(addprefix -I,$(INC_DIRS)) -MMD -MP
 CPPFLAGS:=		$(INC_FLAGS) $(COMP_FLAGS)
 
+$(BUILD_DIR)/main:$(OBJS)
+	@mkdir -p $(dir $@)
+	@echo -n "[ ] $@\r"
+	@$(COMPILER) $(OBJS) -o $@ $(CPPFLAGS)
+	@echo -n "[X\n\r"
+
 $(BUILD_DIR)/%.cpp.o:%.cpp
 	@mkdir -p $(dir $@)
 	@echo -n "[ ] $@\r"
 	@$(COMPILER) -g -c $< -o $@ $(CPPFLAGS)
 	@echo "[X"
 
-$(BUILD_DIR)/$(TARGETS).out:$(OBJS)
-	@mkdir -p $(dir $@)
-	@echo -n "[ ] $@\r"
-	@$(COMPILER) $(OBJS) -o $@ $(CPPFLAGS)
-	@echo -n "[X\n\r"
 
 -include $(DEPS)
 

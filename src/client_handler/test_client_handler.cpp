@@ -20,7 +20,7 @@ void MyTestClientHandler::handleClient(int client_socket)
         string solution;
         if (cm->isCached(problem))
         {
-            solution = cm->getSolution(problem);
+            solution = cm->getSolutionString(problem);
         }
         else
         {

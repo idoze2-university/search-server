@@ -1,4 +1,4 @@
-#include "boot/boot.h"
+#include "./boot/boot.h"
 using namespace boot;
 int main(int _, char **__)
 {
