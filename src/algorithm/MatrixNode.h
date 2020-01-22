@@ -5,18 +5,25 @@
 
 class MatrixNode {
 private:
-    Position& p;
+    Position &p;
     int value;
 public:
-    MatrixNode(Position&,int);
-    Position& getPosition() const;
+    MatrixNode(Position &, int);
+
+    Position &getPosition() const;
+
     int getValue() const;
+
     void setValue(int);
+
     string toString() const;
 
     bool operator==(const MatrixNode &) const;
 
+    bool operator<(const MatrixNode &) const;
+
     friend ostream &operator<<(ostream &, MatrixNode &);
+
     ~MatrixNode();
 };
 
