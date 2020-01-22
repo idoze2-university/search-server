@@ -1,15 +1,10 @@
 #include "file_cache_manager.h"
+#define FILE_CACHE_MANAGER
 namespace cache_manager
 {
-FileCacheManager::FileCacheManager()
-{
-    struct stat buffer;
-    if (stat(FILE_CACHE_MANAGER_DIRNAME, &buffer) != 0)
-    {
-        mkdir(FILE_CACHE_MANAGER_DIRNAME,0777);
-    }
-}
-bool FileCacheManager::isCached(string problem)
+// The following functions ovveride when Problem and Solution are strings, To preserve functionality. [TODO - del]
+template <>
+bool FileCacheManager<string, string>::isCached(string problem)
 {
     if (FILE *_fp = fopen((FILE_CACHE_MANAGER_DIRNAME + problem + FILE_CACHE_MANAGER_SOLUTION_EXTENSION).c_str(), "r"))
     {
@@ -21,7 +16,8 @@ bool FileCacheManager::isCached(string problem)
         return 0;
     }
 }
-string FileCacheManager::getSolution(string problem)
+template <>
+string FileCacheManager<string, string>::getSolutionString(string problem)
 {
     if (FILE *_fp = fopen((FILE_CACHE_MANAGER_DIRNAME + problem + FILE_CACHE_MANAGER_SOLUTION_EXTENSION).c_str(), "r"))
     {
@@ -35,7 +31,8 @@ string FileCacheManager::getSolution(string problem)
         return 0;
     }
 }
-void FileCacheManager::cache(string problem, string solution)
+template <>
+void FileCacheManager<string, string>::cache(string problem, string solution)
 {
     auto _fp = fopen((FILE_CACHE_MANAGER_DIRNAME + problem + FILE_CACHE_MANAGER_SOLUTION_EXTENSION).c_str(), "w+");
     fprintf(_fp, "%s", solution.c_str());

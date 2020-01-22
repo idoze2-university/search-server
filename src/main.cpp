@@ -1,6 +1,6 @@
-#include "boot/boot.h"
+#include "./boot/boot.h"
 using namespace boot;
-int main(int _, char **__)
+int main(int argc, char **args)
 {
-    return boot::Main::main(_, __);
+    return boot::Main::main(argc, args);
 }
