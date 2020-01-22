@@ -1,11 +1,12 @@
 #include <iostream>
 #include "Problem.h"
 #include "Searcher.h"
-#include "DFS.h"
+#include "BestFirstSearch.h"
 
 using namespace std;
 
 int main() {
     Problem p(2);
-    cout<<p<<endl;
+    Searcher *best = new BestFirstSearch();
+    best->search(p);
 }

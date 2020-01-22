@@ -15,3 +15,7 @@ bool MatrixNode::operator==(const MatrixNode & node) const{return getPosition() 
 ostream &operator<<(ostream &os, MatrixNode &node) { return os << node.toString(); }
 
 MatrixNode::~MatrixNode() = default;
+
+bool MatrixNode::operator<(const MatrixNode &other) const {
+    return getValue()<other.getValue();
+}
