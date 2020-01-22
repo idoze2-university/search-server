@@ -3,10 +3,15 @@
 
 #include "Position.h"
 
-class MatrixNode {
+namespace component
+{
+
+class MatrixNode
+{
 private:
     Position &p;
     int value;
+
 public:
     MatrixNode(Position &, int);
 
@@ -27,5 +32,6 @@ public:
     ~MatrixNode();
 };
 
+} // namespace component
 
 #endif //UNTITLED1_MATRIXNODE_H

@@ -5,11 +5,14 @@
 #include "MatrixNode.h"
 
 using namespace std;
-
-class Solution {
+namespace component
+{
+class Solution
+{
 private:
     int cost = 0;
     list<MatrixNode> route;
+
 public:
     int getCost() const;
 
@@ -34,5 +37,5 @@ public:
     bool operator<=(Solution &) const;
 };
 
-
+} // namespace component
 #endif //UNTITLED1_SOLUTION_H

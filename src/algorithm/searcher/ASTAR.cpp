@@ -3,7 +3,11 @@
 //
 
 #include "ASTAR.h"
+namespace searcher
+{
 
-Solution ASTAR::search(Problem) {
+Solution ASTAR::search(Problem)
+{
     return Solution();
 }
+} // namespace searcher

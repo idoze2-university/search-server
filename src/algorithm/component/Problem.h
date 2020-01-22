@@ -8,12 +8,15 @@
 #include <iostream>
 #include <map>
 #include <list>
-
-class Problem {
+namespace component
+{
+class Problem
+{
 private:
     const int size;
     map<double, MatrixNode> matrix;
     MatrixNode *start, *goal;
+
 public:
     explicit Problem(int);
 
@@ -44,5 +47,5 @@ public:
     ~Problem();
 };
 
-
+} // namespace component
 #endif //UNTITLED1_PROBLEM_H
