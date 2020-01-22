@@ -2,6 +2,7 @@
 
 Solution DFS::search(Problem problem) {
     clearAll();
+    Solution solution{};
     MatrixNode start = problem.getStart();
     MatrixNode goal = problem.getGoal();
     stack.push(start);
@@ -16,5 +17,5 @@ Solution DFS::search(Problem problem) {
             }
         }
     }
-    return Solution();
+    return solution;
 }

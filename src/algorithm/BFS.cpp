@@ -6,6 +6,7 @@
 
 Solution BFS::search(Problem problem) {
     clearAll();
+    Solution solution{};
     MatrixNode start = problem.getStart();
     MatrixNode goal = problem.getGoal();
     marked.push_back(start);
@@ -13,8 +14,14 @@ Solution BFS::search(Problem problem) {
     while(!open.empty()){
         auto *m = new MatrixNode(open.front().getPosition(),open.front().getValue());
         if(*m == goal){
-
+            solution.addStep(*m);
+        }
+        for(const auto& neighbor : getNeighbors(problem,*m)){
+            if(isUnmarked(neighbor)){
+                marked.push_back(neighbor);
+                open.push(neighbor);
+            }
         }
     }
-    return Solution();
+    return solution;
 }

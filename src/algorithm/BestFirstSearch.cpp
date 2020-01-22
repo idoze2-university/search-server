@@ -3,7 +3,7 @@
 
 Solution BestFirstSearch::search(Problem problem) {
     clearAll();
-    Solution solution{};
+    Solution solution;
     MatrixNode start = problem.getStart();
     MatrixNode goal = problem.getGoal();
     insertOpen(start);
@@ -13,7 +13,7 @@ Solution BestFirstSearch::search(Problem problem) {
         close.push(*m);
         if(*m==goal){
             solution.addStep(goal);
-            return Solution();
+            return solution;
         }
         else{
             for(const auto& neighbor : getNeighbors(problem,*m)){
