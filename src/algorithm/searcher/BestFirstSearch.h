@@ -4,9 +4,12 @@
 #include <queue>
 #include "Searcher.h"
 using namespace std;
-class BestFirstSearch : public Searcher {
+namespace searcher
+{
+class BestFirstSearch : public Searcher
+{
     Solution search(Problem) override;
 };
-
+} // namespace searcher
 
 #endif //UNTITLED1_BESTFIRSTSEARCH_H
