@@ -13,6 +13,7 @@ void MyClientHandler::handleClient(int client_socket)
         _in_line.erase(std::remove(_in_line.begin(), _in_line.end(), ' '), _in_line.end());
         if (!_in_line.compare("end"))
             break;
+        cout << "In: |" << _in_line << "|" << endl;
         stringstream _in_line_stream(_in_line);
         vector<string> mat_row;
         while (_in_line_stream.good())
