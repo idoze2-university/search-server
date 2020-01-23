@@ -5,37 +5,37 @@
 #include "MatrixNode.h"
 
 using namespace std;
-namespace component
-{
-class Solution
-{
-private:
-    int cost = 0;
-    list<MatrixNode> route;
+namespace component {
+    class Solution {
+    private:
+        int cost = 0;
+        list<MatrixNode> route;
 
-public:
-    int getCost() const;
+    public:
+        void setCost(int);
 
-    list<MatrixNode> getRoute();
+        int getCost() const;
 
-    void addStep(const MatrixNode &node);
+        list<MatrixNode> getRoute();
 
-    void removeStep(const MatrixNode &node);
+        void addStep(const MatrixNode &node);
 
-    string toString();
+        void removeStep(const MatrixNode &node);
 
-    friend ostream &operator<<(ostream &, Solution &);
+        string toString();
 
-    bool operator==(Solution &) const;
+        friend ostream &operator<<(ostream &, Solution &);
 
-    bool operator<(Solution &) const;
+        bool operator==(Solution &) const;
 
-    bool operator>(Solution &) const;
+        bool operator<(Solution &) const;
 
-    bool operator>=(Solution &) const;
+        bool operator>(Solution &) const;
 
-    bool operator<=(Solution &) const;
-};
+        bool operator>=(Solution &) const;
+
+        bool operator<=(Solution &) const;
+    };
 
 } // namespace component
 #endif //UNTITLED1_SOLUTION_H

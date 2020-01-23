@@ -5,7 +5,9 @@ int Solution::getCost() const
 {
     return cost;
 }
-
+void Solution::setCost(int c) {
+    cost = c;
+}
 list<MatrixNode> Solution::getRoute()
 {
     return route;
@@ -14,7 +16,6 @@ list<MatrixNode> Solution::getRoute()
 void Solution::addStep(const MatrixNode &node)
 {
     route.push_back(node);
-    cost += node.getValue();
 }
 
 void Solution::removeStep(const MatrixNode &node)
