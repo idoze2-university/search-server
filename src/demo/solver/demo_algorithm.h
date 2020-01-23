@@ -8,10 +8,10 @@
 using namespace std;
 namespace solver
 {
-class DemoAlgorithm : public ISolver<Problem, Solution>
+class DemoAlgorithm : public ISolver<problem_sol_demo::Problem, problem_sol_demo::Solution>
 {
 public:
-    Solution solve(Problem);
+    problem_sol_demo::Solution solve(problem_sol_demo::Problem);
 };
 
 } // namespace solver
