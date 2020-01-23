@@ -16,7 +16,7 @@ list<MatrixNode> Solution::getRoute()
 
 void Solution::addStep(const MatrixNode &node)
 {
-    route.push_back(node);
+    route.push_front(node);
 }
 
 void Solution::removeStep(const MatrixNode &node)
