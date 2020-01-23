@@ -1,7 +1,7 @@
 #include "Searcher.h"
 namespace searcher
 {
-list<MatrixNode> Searcher::getNeighbors(Problem problem, const MatrixNode &node)
+list<MatrixNode> Searcher::getNeighbors(Problem problem, MatrixNode &node)
 {
     list<MatrixNode> neighbors;
     //GET LEFT NEIGHBOR
@@ -32,21 +32,21 @@ list<MatrixNode> Searcher::getNeighbors(Problem problem, const MatrixNode &node)
     return neighbors;
 }
 
-void Searcher::insertOpen(const MatrixNode &node)
+void Searcher::insertOpen(SearcherState &state)
 {
-    open.push(node);
-    marked.push_back(node);
-    queue<MatrixNode> tempQ;
+    open.push(state);
+    marked.push_back(state);
+    queue<SearcherState> tempQ;
     while (!open.empty())
     {
-        auto *minNode = new MatrixNode(open.front().getPosition(), open.front().getValue());
+        auto *minNode = new MatrixNode(open.front().getNode()->getPosition(), open.front().getNode()->getValue());
         open.pop();
-        for (int i = 0; i < open.size(); i++)
+        for (int i = 0; i < (int)open.size(); i++)
         {
-            if (open.front() < *minNode)
+            if (*(open.front().getNode()) < *minNode)
             {
-                open.push(*minNode);
-                minNode = new MatrixNode(open.front().getPosition(), open.front().getValue());
+                open.push(SearcherState(state.getCost() + minNode->getValue(), minNode, state.getNode()));
+                minNode = new MatrixNode(open.front().getNode()->getPosition(), open.front().getNode()->getValue());
                 open.pop();
             }
             else
@@ -55,7 +55,7 @@ void Searcher::insertOpen(const MatrixNode &node)
                 open.pop();
             }
         }
-        tempQ.push(*minNode);
+        tempQ.push(SearcherState(state.getCost() + minNode->getValue(), minNode, state.getNode()));
     }
     int size = tempQ.size();
     for (int i = 0; i < size; i++)
@@ -65,11 +65,11 @@ void Searcher::insertOpen(const MatrixNode &node)
     }
 }
 
-bool Searcher::isUnmarked(const MatrixNode &newNode)
+bool Searcher::isUnmarked(SearcherState &newState)
 {
-    for (const auto &node : marked)
+    for (auto &marked_state : marked)
     {
-        if (newNode == node)
+        if (*(newState.getNode()) == *(marked_state.getNode()))
         {
             return false;
         }
@@ -89,20 +89,20 @@ void Searcher::clearAll()
     {
         close.pop();
     }
-    while (!stack.empty())
+    while (!_stack.empty())
     {
-        stack.pop();
+        _stack.pop();
     }
     marked.clear();
 }
 
-bool Searcher::inOpen(const MatrixNode &m)
+bool Searcher::inOpen(MatrixNode &m)
 {
     int size = open.size();
     bool in = false;
     for (int i = 0; i < size; i++)
     {
-        if (m == open.front())
+        if (m == *(open.front().getNode()))
         {
             in = true;
         }
@@ -112,18 +112,18 @@ bool Searcher::inOpen(const MatrixNode &m)
     return in;
 }
 
-bool Searcher::inClosed(const MatrixNode &m)
+bool Searcher::inClosed(MatrixNode &m)
 {
-    int size = open.size();
+    int size = close.size();
     bool in = false;
     for (int i = 0; i < size; i++)
     {
-        if (m == open.front())
+        if (m == *(close.front().getNode()))
         {
             in = true;
         }
-        open.push(open.front());
-        open.pop();
+        close.push(close.front());
+        close.pop();
     }
     return in;
 }

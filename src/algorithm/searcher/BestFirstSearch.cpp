@@ -9,24 +9,28 @@ Solution BestFirstSearch::search(Problem problem)
     Solution solution;
     MatrixNode start = problem.getStart();
     MatrixNode goal = problem.getGoal();
-    insertOpen(start);
+    SearcherState s(0, &start, nullptr);
+    insertOpen(s);
     while (!open.empty())
     {
-        auto *m = new MatrixNode(open.front().getPosition(), open.front().getValue());
+        auto *m = new SearcherState(open.front().getCost(), open.front().getNode(), open.front().getNode());
         open.pop();
         close.push(*m);
-        if (*m == goal)
+        if (*(m->getNode()) == goal)
         {
-            solution.addStep(goal);
-            return solution;
         }
         else
         {
-            for (const auto &neighbor : getNeighbors(problem, *m))
+            for (auto &neighbor : getNeighbors(problem, *m->getNode()))
             {
                 if (!inOpen(neighbor) && !inClosed(neighbor))
                 {
-                    insertOpen(neighbor);
+                    SearcherState neighbor_state(neighbor.getValue() + m->getCost(), &neighbor, m->getNode());
+                    insertOpen(neighbor_state);
+                }
+                else
+                {
+                    
                 }
             }
         }

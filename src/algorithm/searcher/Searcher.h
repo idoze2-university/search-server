@@ -5,24 +5,25 @@
 #include <queue>
 #include "../component/Problem.h"
 #include "../component/Solution.h"
+#include "SearcherState.h"
 using namespace component;
-#include "SearcherData.h"
+// #include "../_legacy/SearcherData.h"
 using namespace std;
 namespace searcher
 {
 class Searcher
 {
 public:
-    queue<MatrixNode> open;
-    queue<MatrixNode> close;
-    list<MatrixNode> marked;
-    stack<MatrixNode> stack;
+    queue<SearcherState> open;
+    queue<SearcherState> close;
+    list<SearcherState> marked;
+    stack<SearcherState> _stack;
     virtual Solution search(Problem) = 0;
-    static list<MatrixNode> getNeighbors(Problem, const MatrixNode &);
-    bool isUnmarked(const MatrixNode &);
-    void insertOpen(const MatrixNode &);
-    bool inOpen(const MatrixNode &);
-    bool inClosed(const MatrixNode &);
+    static list<MatrixNode> getNeighbors(Problem,  MatrixNode &);
+    bool isUnmarked( SearcherState &);
+    void insertOpen( SearcherState &);
+    bool inOpen( MatrixNode &);
+    bool inClosed( MatrixNode &);
     void clearAll();
 };
 } // namespace searcher
