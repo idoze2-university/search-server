@@ -19,7 +19,7 @@ public:
     list<SearcherState> marked;
     stack<SearcherState> _stack;
     virtual Solution search(Problem) = 0;
-    static list<MatrixNode> getNeighbors(Problem, MatrixNode &);
+    static list<MatrixNode> getNeighbors(Problem, MatrixNode);
     bool isUnmarked(SearcherState &);
     void insertOpen(SearcherState &);
     bool inOpen(MatrixNode &);

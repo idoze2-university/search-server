@@ -12,11 +12,11 @@ private:
     component::MatrixNode *_parent;
 
 public:
-    SearcherState(int _c, component::MatrixNode *_n, component::MatrixNode *_p)
+    SearcherState(int _c, const component::MatrixNode& _n, const component::MatrixNode& _p)
     {
-        _node = _n;
+        _node = new MatrixNode(_n.getPosition(),_n.getValue());
         setCost(_c);
-        setParent(_p);
+        _parent = new MatrixNode(_p.getPosition(), _p.getValue());
     }
     component::MatrixNode *getNode();
     component::MatrixNode *getParent();
