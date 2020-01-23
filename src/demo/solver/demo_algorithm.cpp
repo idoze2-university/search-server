@@ -3,7 +3,7 @@ namespace solver
 {
 Solution DemoAlgorithm::solve(Problem in)
 {
-    cout << "dummy solving... "<< endl;
+    cout << "dummy solving: " << in.operator std::__cxx11::string() << endl;
     Solution sol;
     sol.push_back(direction(direction::Down));
     sol.push_back(direction(direction::Up));

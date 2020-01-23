@@ -5,7 +5,8 @@ int Solution::getCost() const
 {
     return cost;
 }
-void Solution::setCost(int c) {
+void Solution::setCost(int c)
+{
     cost = c;
 }
 list<MatrixNode> Solution::getRoute()
