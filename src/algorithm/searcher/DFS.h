@@ -5,12 +5,13 @@
 #ifndef UNTITLED1_DFS_H
 #define UNTITLED1_DFS_H
 
-
 #include "Searcher.h"
-
-class DFS : public Searcher{
+namespace searcher
+{
+class DFS : public Searcher
+{
     Solution search(Problem) override;
 };
-
+} // namespace searcher
 
 #endif //UNTITLED1_DFS_H

@@ -1,8 +1,8 @@
 #ifndef UNTITLED1_SEARCHERDATA_H
 #define UNTITLED1_SEARCHERDATA_H
 
-#include "Solution.h"
-#include "Problem.h"
+#include "../component/Solution.h"
+#include "../component/Problem.h"
 
 class SearcherData {
 private:

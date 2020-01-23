@@ -1,11 +1,14 @@
 #include <iostream>
-#include "Problem.h"
-#include "Searcher.h"
-#include "BestFirstSearch.h"
+#include "component/Problem.h"
+#include "searcher/Searcher.h"
+#include "searcher/BestFirstSearch.h"
 
 using namespace std;
+using namespace searcher;
+using namespace component;
 
-int main() {
+int main()
+{
     Problem p(2);
     Searcher *best = new BestFirstSearch();
     best->search(p);

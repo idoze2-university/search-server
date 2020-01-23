@@ -6,11 +6,14 @@
 #include <cmath>
 
 using namespace std;
-
-class Position {
+namespace component
+{
+class Position
+{
 private:
     const int row, col;
     double hashKey;
+
 public:
     Position(int, int);
 
@@ -29,5 +32,5 @@ public:
     ~Position();
 };
 
-
+} // namespace component
 #endif //UNTITLED1_POSITION_H
