@@ -2,8 +2,10 @@
 FILE_CACHE_DATA_DIR= ./cached_data/
 
 # COMPILATION #####################################################################################
-# SRCS_DIRS= src/algorithm
-SRCS_DIRS?=	src
+
+override SRCS_DIRS = src/algorithm
+override EXCLUDE_D = _legacy searcher/BFS.cpp searcher/DFS.cpp searcher/ASTAR.cpp
+SRCS_DIRS=	src
 BUILD_DIR=	build
 EXCLUDE_D=	algorithm/_legacy algorithm/searcher/BFS.cpp algorithm/searcher/DFS.cpp algorithm/searcher/ASTAR.cpp
 
@@ -19,13 +21,11 @@ DEPS:=	$(OBJS:.o=.d)
 
 COMPILER=		g++
 DEBUG_FLAG= 	-ggdb3
-COMP_FLAGS= 	$(DEBUG_FLAG) -std=c++14 -Wall -Wextra -Wshadow -pedantic -pthread
-#  -Wnon-virtual-dtor
+COMP_FLAGS= 	$(DEBUG_FLAG) -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
 
 INC_DIRS:=	 	$(shell find $(SRCS_DIRS) -type d)
 INC_FLAGS:=		$(addprefix -I,$(INC_DIRS)) -MMD -MP
 CPPFLAGS:=		$(INC_FLAGS) $(COMP_FLAGS)
-
 
 $(BUILD_DIR)/main:$(OBJS)
 	@mkdir -p $(dir $@)

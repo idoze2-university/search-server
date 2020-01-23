@@ -4,7 +4,9 @@ namespace client_handler
 {
 void MyClientHandler::handleClient(int client_socket)
 {
-    Problem problem;
+    Problem problem();
+    auto *pStart = new Position(0, 0);
+    auto *pGoal = new Position(0, 0);
     for (char _in[BUFFSIZE] = {0}; read(client_socket, _in, BUFFSIZE) > 0; memset(_in, 0, BUFFSIZE))
     {
         string _in_line(_in);

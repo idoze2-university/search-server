@@ -2,5 +2,8 @@ cmake_minimum_required(VERSION 3.15)
 project(untitled1)
 
 set(CMAKE_CXX_STANDARD 14)
+include_directories(${CMAKE_SOURCE_DIR})
+file(GLOB_RECURSE SRCS *.cpp)
+file(GLOB_RECURSE HEADERS *.h)
 
-add_executable(search-server main.cpp Position.cpp Position.h Problem.cpp Problem.h MatrixNode.cpp MatrixNode.h Searcher.cpp Searcher.h Solution.cpp Solution.h BestFirstSearch.cpp BestFirstSearch.h DFS.cpp DFS.h BFS.cpp BFS.h ASTAR.cpp ASTAR.h SearcherData.cpp SearcherData.h Position.cpp Position.h)
+add_executable(${SRCS} ${HEADERS} main.cpp)

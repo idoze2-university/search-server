@@ -16,7 +16,9 @@ using cache_manager::ICacheManager;
 #include "../solver/solver.h"
 #define BUFFSIZE 1024
 using solver::ISolver;
-#include "../demo/problem_sol_demo/problem_solution_demo.h"
+#include "../algorithm/component/Problem.h"
+#include "../algorithm/component/Solution.h"
+using namespace component;
 
 namespace client_handler
 {

@@ -3,7 +3,7 @@
 namespace component
 {
 
-MatrixNode::MatrixNode(Position &p, int value) : p(p), value(value) {}
+MatrixNode::MatrixNode(Position &_p, int _value) : p(_p), value(_value) {}
 
 Position &MatrixNode::getPosition() const { return p; }
 

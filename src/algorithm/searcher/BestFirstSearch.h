@@ -9,6 +9,7 @@ namespace searcher
 class BestFirstSearch : public Searcher
 {
     Solution search(Problem) override;
+    virtual ~BestFirstSearch() {}
 };
 } // namespace searcher
 

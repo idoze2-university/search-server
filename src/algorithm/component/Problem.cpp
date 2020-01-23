@@ -1,9 +1,13 @@
 #include "Problem.h"
 namespace component
 {
-Problem::Problem(int size) : size(size)
+Problem::Problem(int _size) : size(_size)
 {
     initialize();
+}
+
+Problem::Problem() : size(0)
+{
 }
 
 int Problem::getSize() const
@@ -20,9 +24,14 @@ void Problem::setMatrix(Position &position, int value)
 {
     if (position.getRow() < getSize() && position.getCol() < getSize())
     {
-        matrix.erase(position.getHashKey());
-        matrix.insert({position.getHashKey(), MatrixNode(position, value)});
+        setMatrix_unsafe(position, value);
     }
+}
+
+void Problem::setMatrix_unsafe(Position &position, int value)
+{
+    matrix.erase(position.getHashKey());
+    matrix.insert({position.getHashKey(), MatrixNode(position, value)});
 }
 
 void Problem::initialize()
@@ -53,8 +62,10 @@ void Problem::initialize()
             matrix.insert({Position(i, j).getHashKey(), MatrixNode(*p, user_value)});
         }
     }
-    setStart();
-    setGoal();
+    auto pStart = new Position(0, 0);
+    setStart(pStart);
+    auto pGoal = new Position(getSize() - 1, getSize() - 1);
+    setGoal(pGoal);
 }
 
 bool Problem::operator==(Problem &problem) const
@@ -123,17 +134,19 @@ list<MatrixNode> Problem::getCol(int num)
     }
     return list;
 }
-
-void Problem::setStart()
+void Problem::setSize(int _size)
 {
-    auto *pStart = new Position(0, 0);
+    size = _size;
+}
+
+void Problem::setStart(Position *pStart)
+{
     auto *node = new MatrixNode(*pStart, getMatrix().find(pStart->getHashKey())->second.getValue());
     start = node;
 }
 
-void Problem::setGoal()
+void Problem::setGoal(Position *pGoal)
 {
-    auto pGoal = new Position(getSize() - 1, getSize() - 1);
     auto *node = new MatrixNode(*pGoal, getMatrix().find(pGoal->getHashKey())->second.getValue());
     goal = node;
 }
