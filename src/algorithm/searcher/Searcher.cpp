@@ -8,25 +8,42 @@ list<MatrixNode> Searcher::getNeighbors(Problem problem, MatrixNode &node)
     if (node.getPosition().getCol() != 0)
     {
         int row = node.getPosition().getRow(), col = node.getPosition().getCol() - 1;
-        neighbors.push_back(problem.getMatrix().find(Position(row, col).getHashKey())->second);
+        Position p(row,col);
+        double key = p.getHashKey();
+        int nodeValue = problem.getMatrix().find(key)->second.getValue();
+        if(nodeValue!=-1) {
+            neighbors.push_back(problem.getMatrix().find(Position(row, col).getHashKey())->second);
+        }
     }
     //GET RIGHT NEIGHBOR
     if (node.getPosition().getCol() + 1 != problem.getSize())
     {
         int row = node.getPosition().getRow(), col = node.getPosition().getCol() + 1;
-        neighbors.push_back(problem.getMatrix().find(Position(row, col).getHashKey())->second);
+        double key = p.getHashKey();
+        int nodeValue = problem.getMatrix().find(key)->second.getValue();
+        if(nodeValue!=-1) {
+            neighbors.push_back(problem.getMatrix().find(Position(row, col).getHashKey())->second);
+        }
     }
     //GET TOP NEIGHBOR
     if (node.getPosition().getRow() != 0)
     {
         int row = node.getPosition().getRow() - 1, col = node.getPosition().getCol();
-        neighbors.push_back(problem.getMatrix().find(Position(row, col).getHashKey())->second);
+        double key = p.getHashKey();
+        int nodeValue = problem.getMatrix().find(key)->second.getValue();
+        if(nodeValue!=-1) {
+            neighbors.push_back(problem.getMatrix().find(Position(row, col).getHashKey())->second);
+        }
     }
     //GET BOTTOM NEIGHBOR
     if (node.getPosition().getRow() + 1 != problem.getSize())
     {
         int row = node.getPosition().getRow() + 1, col = node.getPosition().getCol();
-        neighbors.push_back(problem.getMatrix().find(Position(row, col).getHashKey())->second);
+        double key = p.getHashKey();
+        int nodeValue = problem.getMatrix().find(key)->second.getValue();
+        if(nodeValue!=-1) {
+            neighbors.push_back(problem.getMatrix().find(Position(row, col).getHashKey())->second);
+        }
     }
 
     return neighbors;
@@ -35,18 +52,17 @@ list<MatrixNode> Searcher::getNeighbors(Problem problem, MatrixNode &node)
 void Searcher::insertOpen(SearcherState &state)
 {
     open.push(state);
-    marked.push_back(state);
     queue<SearcherState> tempQ;
     while (!open.empty())
     {
-        auto *minNode = new MatrixNode(open.front().getNode()->getPosition(), open.front().getNode()->getValue());
+        auto *minState = new SearcherState(open.front().getCost(),open.front().getNode(),open.front().getParent());
         open.pop();
         for (int i = 0; i < (int)open.size(); i++)
         {
-            if (*(open.front().getNode()) < *minNode)
+            if (open.front().getCost() < minState->getCost())
             {
-                open.push(SearcherState(state.getCost() + minNode->getValue(), minNode, state.getNode()));
-                minNode = new MatrixNode(open.front().getNode()->getPosition(), open.front().getNode()->getValue());
+                open.push(*minState);
+                minState = new SearcherState(open.front().getCost(),open.front().getNode(),open.front().getParent());
                 open.pop();
             }
             else
@@ -55,7 +71,7 @@ void Searcher::insertOpen(SearcherState &state)
                 open.pop();
             }
         }
-        tempQ.push(SearcherState(state.getCost() + minNode->getValue(), minNode, state.getNode()));
+        tempQ.push(*minState);
     }
     int size = tempQ.size();
     for (int i = 0; i < size; i++)
