@@ -59,6 +59,7 @@
         "bitset": "cpp",
         "typeindex": "cpp",
         "complex": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "stack": "cpp"
     },
 }

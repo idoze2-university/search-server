@@ -8,17 +8,17 @@ Solution DFS::search(Problem problem)
     Solution solution{};
     MatrixNode start = problem.getStart();
     MatrixNode goal = problem.getGoal();
-    stack.push(start);
+    _stack.push(start);
     marked.push_back(start);
-    while (!stack.empty())
+    while (!_stack.empty())
     {
-        auto *m = new MatrixNode(stack.top().getPosition(), stack.top().getValue());
-        stack.pop();
+        auto *m = new MatrixNode(_stack.top().getPosition(), _stack.top().getValue());
+        _stack.pop();
         for (const auto &neighbor : getNeighbors(problem, *m))
         {
             if (isUnmarked(neighbor))
             {
-                stack.push(neighbor);
+                _stack.push(neighbor);
                 marked.push_back(neighbor);
             }
         }
