@@ -32,26 +32,54 @@ void Solution::removeStep(const MatrixNode &node)
 
 string Solution::toString()
 {
-    string solution_str = "Solution: ";
-    bool first = true;
+    struct _position
+    {
+        int x;
+        int y;
+    };
+    stringstream os;
+    auto last_pos = _position{0, 0};
+    int total_cost = 0;
     for (const auto &step : route)
     {
-        if (!first)
+        auto pos = _position{step.getPosition().getCol(), step.getPosition().getRow()};
+        //don't output the first node
+        if (!(step == route.front()))
         {
-            solution_str += "--->";
+            if (auto dx = pos.x - last_pos.x)
+            {
+                if (dx == 1) // Right
+                    os << "Right";
+                else if (dx == -1) // Left
+                    os << "Left";
+                else
+                {
+                    cerr << "Illegal X-axis jump, from {" << last_pos.y << "," << last_pos.x << "} to {" << pos.y << "," << pos.x << "}." << endl;
+                    return "Invalid solution";
+                }
+            }
+            else if (auto dy = pos.y - last_pos.y)
+            {
+                if (dy == 1) // Down
+                    os << "Down";
+                else if (dy == -1) // Up
+                    os << "Up";
+                else
+                {
+                    cerr << "Illegal Y-axis jump, from {" << last_pos.y << "," << last_pos.x << "} to {" << pos.y << "," << pos.x << "}." << endl;
+                    return "Invalid solution";
+                }
+            }
+            //keep track of cost
+            total_cost += step.getValue();
+            os << " (" << total_cost << ")";
+
+            // if not last node, add comma.
+            os << (step == route.back() ? "" : " ,");
         }
-        solution_str += "{" + step.toString() + "}";
-        first = false;
+        last_pos = pos;
     }
-    if (first)
-    {
-        solution_str = "No Solution.";
-    }
-    else
-    {
-        solution_str += "\nTotal cost: " + to_string(getCost());
-    }
-    return solution_str;
+    return os.str();
 }
 
 ostream &operator<<(ostream &os, Solution &solution) { return os << solution.toString(); }

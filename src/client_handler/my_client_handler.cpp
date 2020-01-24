@@ -26,7 +26,7 @@ void MyClientHandler::handleClient(int client_socket)
                 getline(_in_line_stream, cell_value_string, ',');
                 auto cell_value = stoi(cell_value_string);
                 auto *pos = new Position(row, col);
-                problem.insertMatrix(row,col,cell_value);
+                problem.insertMatrix(row, col, cell_value);
                 cout << problem.getMatrix().at(pos->getHashKey()) << endl;
             }
             if (problem.getSize() == 0)
@@ -49,8 +49,8 @@ void MyClientHandler::handleClient(int client_socket)
     else
     {
         auto solution = solver->solve(problem);
-        cm->cache(problem, solution.toString());
         solution_str = solution.toString();
+        cm->cache(problem, solution_str);
     }
     auto out_str = solution_str + "\r";
     auto is_sent = send(client_socket, (out_str.c_str()), (u_int)out_str.length(), 0);
