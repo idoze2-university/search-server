@@ -2,7 +2,11 @@
 
 namespace component
 {
-Position::Position(int _row, int _col) : row(_row), col(_col), hashKey(pow(_row + 1, 2) * pow(_col + 1, 3)) {}
+Position::Position(int _row, int _col) : row(_row), col(_col) {
+    hashKey = (_row+_col)*(_row+_col+1);
+    hashKey /= 2;
+    hashKey += _col;
+}
 
 int Position::getRow() const { return row; }
 
