@@ -70,7 +70,7 @@ namespace searcher {
                 if (open.front().getCost() < minState->getCost()) {
                     open.push(*minState);
                     minState = new SearcherState(open.front().getCost(), *(open.front().getNode()),
-                                                     *(open.front().getParent()));
+                                                 *(open.front().getParent()));
                     open.pop();
                 } else {
                     open.push(open.front());
@@ -106,6 +106,9 @@ namespace searcher {
         }
         while (!_stack.empty()) {
             _stack.pop();
+        }
+        while (!searcherState_stack.empty()) {
+            searcherState_stack.pop();
         }
         marked.clear();
     }
