@@ -33,7 +33,11 @@ void Problem::setMatrix_unsafe(Position &position, int value)
 {
     matrix.insert({position.getHashKey(), MatrixNode(position, value)});
 }
-
+void Problem::insertMatrix(int x, int y, int value)
+{
+    auto *p = new Position(x, y);
+    matrix.insert({Position(x,y).getHashKey(), MatrixNode(*p, value)});
+}
 void Problem::initialize()
 {
     char generate;

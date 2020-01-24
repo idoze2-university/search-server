@@ -30,6 +30,7 @@ public:
     map<double, MatrixNode> getMatrix();
     void setMatrix(Position &, int);
     void setMatrix_unsafe(Position &position, int value);
+    void insertMatrix(int, int, int);
     void initialize();
     bool operator==(Problem &) const;
     operator string();
