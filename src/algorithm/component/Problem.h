@@ -6,6 +6,7 @@
 #include "Position.h"
 #include "MatrixNode.h"
 #include <iostream>
+#include <sstream>
 #include <map>
 #include <list>
 namespace component
@@ -31,6 +32,7 @@ public:
     void setMatrix_unsafe(Position &position, int value);
     void initialize();
     bool operator==(Problem &) const;
+    operator string();
     friend ostream &operator<<(ostream &, Problem &);
     list<MatrixNode> getRow(int);
     list<MatrixNode> getCol(int);

@@ -6,8 +6,6 @@ void MyClientHandler::handleClient(int client_socket)
 {
     Problem problem;
     bool size_initialized = false;
-    auto *pStart = new Position(0, 0);
-    auto *pGoal = new Position(0, 0);
     int row = 0;
     for (char _in[BUFFSIZE] = {0}; read(client_socket, _in, BUFFSIZE) > 0; memset(_in, 0, BUFFSIZE))
     {
@@ -20,7 +18,7 @@ void MyClientHandler::handleClient(int client_socket)
         cout << "In: |" << _in_line << "|" << endl;
         stringstream _in_line_stream(_in_line);
         int col = 0;
-        if ((!col) || (size_initialized && row < problem.getSize()))
+        if ((!row) || (size_initialized && row < problem.getSize()))
         {
             for (; _in_line_stream.good(); col++)
             {
@@ -29,18 +27,20 @@ void MyClientHandler::handleClient(int client_socket)
                 auto cell_value = stoi(cell_value_string);
                 auto pos = Position(row, col);
                 problem.setMatrix_unsafe(pos, cell_value);
+                cout << problem.getMatrix().at(pos.getHashKey()) << endl;
             }
-            if (!problem.getSize())
+            if (problem.getSize() == 0)
             {
                 problem.setSize(col);
                 size_initialized = 1;
             }
             row++;
         }
-        else
-        {
-        }
     }
+    problem.setStart(new Position(0, 0));
+    problem.setGoal(new Position(problem.getSize() - 1, problem.getSize() - 1));
+    cout << problem.getStart() << endl;
+    cout << problem.getGoal() << endl;
     string solution_str;
     if (cm->isCached(problem))
     {
@@ -49,8 +49,8 @@ void MyClientHandler::handleClient(int client_socket)
     else
     {
         auto solution = solver->solve(problem);
-        cm->cache(problem, solution);
-        solution_str = (string)solution;
+        cm->cache(problem, solution.toString());
+        solution_str = solution.toString();
     }
     auto out_str = solution_str + "\r";
     auto is_sent = send(client_socket, (out_str.c_str()), (u_int)out_str.length(), 0);

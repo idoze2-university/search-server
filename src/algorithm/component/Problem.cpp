@@ -24,13 +24,13 @@ void Problem::setMatrix(Position &position, int value)
 {
     if (position.getRow() < getSize() && position.getCol() < getSize())
     {
+        matrix.erase(position.getHashKey());
         setMatrix_unsafe(position, value);
     }
 }
 
 void Problem::setMatrix_unsafe(Position &position, int value)
 {
-    matrix.erase(position.getHashKey());
     matrix.insert({position.getHashKey(), MatrixNode(position, value)});
 }
 
@@ -161,4 +161,18 @@ MatrixNode &Problem::getGoal()
     return *goal;
 }
 Problem::~Problem() = default;
+Problem::operator string()
+{
+    stringstream os;
+    for (int i = 0; i < getSize(); i++)
+    {
+        for (int j = 0; j < getSize(); j++)
+        {
+            Position p(i, j);
+            os << getMatrix().find(p.getHashKey())->second.getValue() << " ";
+        }
+        os << endl;
+    }
+    return os.str();
+}
 } // namespace component

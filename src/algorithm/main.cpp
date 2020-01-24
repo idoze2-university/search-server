@@ -9,7 +9,7 @@ using namespace component;
 
 int main()
 {
-    Problem p(5);
+    Problem p(100);
     Searcher *best = new BestFirstSearch();
     auto _sol = best->search(p);
     cout<<p<<endl;
