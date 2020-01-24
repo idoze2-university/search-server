@@ -5,6 +5,7 @@
 #include "../cache_manager/file_cache_manager.h"
 #include "../algorithm/searcher/BestFirstSearch.h"
 #include "../algorithm/searcher/DFS.h"
+#include "../algorithm/searcher/BFS.h"
 #include "../adapter/searcher_adapter.h"
 #include "../client_handler/my_client_handler.h"
 #include "../server_side/serial_server.h"

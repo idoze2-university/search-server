@@ -32,6 +32,8 @@ void Solution::removeStep(const MatrixNode &node)
 
 string Solution::toString()
 {
+    if (route.empty())
+        return "No Solution";
     struct _position
     {
         int x;
@@ -40,6 +42,7 @@ string Solution::toString()
     stringstream os;
     auto last_pos = _position{0, 0};
     int total_cost = 0;
+    bool invalid = false;
     for (const auto &step : route)
     {
         auto pos = _position{step.getPosition().getCol(), step.getPosition().getRow()};
@@ -54,8 +57,9 @@ string Solution::toString()
                     os << "Left";
                 else
                 {
+                    os << "* Teleport *";
                     cerr << "Illegal X-axis jump, from {" << last_pos.y << "," << last_pos.x << "} to {" << pos.y << "," << pos.x << "}." << endl;
-                    return "Invalid solution";
+                    invalid = true;
                 }
             }
             else if (auto dy = pos.y - last_pos.y)
@@ -67,7 +71,8 @@ string Solution::toString()
                 else
                 {
                     cerr << "Illegal Y-axis jump, from {" << last_pos.y << "," << last_pos.x << "} to {" << pos.y << "," << pos.x << "}." << endl;
-                    return "Invalid solution";
+                    os << "* Teleport *";
+                    invalid = true;
                 }
             }
             //keep track of cost
@@ -79,7 +84,7 @@ string Solution::toString()
         }
         last_pos = pos;
     }
-    return os.str();
+    return invalid ? "Invalid Solution" : os.str();
 }
 
 ostream &operator<<(ostream &os, Solution &solution) { return os << solution.toString(); }
