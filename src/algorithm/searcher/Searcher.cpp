@@ -86,13 +86,13 @@ namespace searcher {
         }
     }
 
-    bool Searcher::isUnmarked(SearcherState &newState) {
+    bool Searcher::isUnmarked(MatrixNode &newState) {
         for (auto &marked_state : marked) {
-            if (*(newState.getNode()) == *(marked_state.getNode())) {
+            if (newState == marked_state) {
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
     void Searcher::clearAll() {
