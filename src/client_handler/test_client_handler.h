@@ -15,10 +15,10 @@ class MyTestClientHandler : public IClientHandler
 {
 private:
     ICacheManager<string, string> *cm;
-    ISolver<string, string> *solver;
+    ISolver<string,string> *solver;
 
 public:
-    MyTestClientHandler(ICacheManager<string, string> *_cm, ISolver<string, string> *_solver)
+    MyTestClientHandler(ICacheManager<string, string> *_cm, ISolver<string,string> *_solver)
     {
         this->cm = _cm;
         this->solver = _solver;

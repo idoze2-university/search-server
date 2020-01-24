@@ -4,9 +4,11 @@ namespace client_handler
 {
 void MyClientHandler::handleClient(int client_socket)
 {
-    Problem problem();
+    Problem problem;
+    bool size_initialized = false;
     auto *pStart = new Position(0, 0);
     auto *pGoal = new Position(0, 0);
+    int row = 0;
     for (char _in[BUFFSIZE] = {0}; read(client_socket, _in, BUFFSIZE) > 0; memset(_in, 0, BUFFSIZE))
     {
         string _in_line(_in);
@@ -17,14 +19,27 @@ void MyClientHandler::handleClient(int client_socket)
             break;
         cout << "In: |" << _in_line << "|" << endl;
         stringstream _in_line_stream(_in_line);
-        vector<string> mat_row;
-        while (_in_line_stream.good())
+        int col = 0;
+        if ((!col) || (size_initialized && row < problem.getSize()))
         {
-            string substr;
-            getline(_in_line_stream, substr, ',');
-            mat_row.push_back(substr);
+            for (; _in_line_stream.good(); col++)
+            {
+                string cell_value_string;
+                getline(_in_line_stream, cell_value_string, ',');
+                auto cell_value = stoi(cell_value_string);
+                auto pos = Position(row, col);
+                problem.setMatrix_unsafe(pos, cell_value);
+            }
+            if (!problem.getSize())
+            {
+                problem.setSize(col);
+                size_initialized = 1;
+            }
+            row++;
         }
-        problem.push_back(mat_row);
+        else
+        {
+        }
     }
     string solution_str;
     if (cm->isCached(problem))

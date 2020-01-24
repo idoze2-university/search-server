@@ -3,8 +3,8 @@ FILE_CACHE_DATA_DIR= ./cached_data/
 
 # COMPILATION #####################################################################################
 
-override SRCS_DIRS = src/algorithm
-override EXCLUDE_D = _legacy searcher/BFS.cpp searcher/DFS.cpp searcher/ASTAR.cpp
+# override SRCS_DIRS = src/algorithm
+# override EXCLUDE_D = _legacy searcher/BFS.cpp searcher/DFS.cpp searcher/ASTAR.cpp
 SRCS_DIRS=	src
 BUILD_DIR=	build
 EXCLUDE_D=	algorithm/_legacy algorithm/searcher/BFS.cpp algorithm/searcher/DFS.cpp algorithm/searcher/ASTAR.cpp
