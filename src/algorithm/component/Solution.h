@@ -3,6 +3,7 @@
 
 #include <list>
 #include "MatrixNode.h"
+#include <sstream>
 
 using namespace std;
 namespace component

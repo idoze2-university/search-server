@@ -11,7 +11,7 @@ int main()
 {
     Problem p(3);
     cout<<p<<endl;
-    Searcher *best = new BestFirstSearch();
+    Searcher *best = new DFS();
     auto _sol = best->search(p);
     cout << _sol << endl;
 }
