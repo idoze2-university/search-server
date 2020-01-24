@@ -16,11 +16,11 @@ class Searcher
 public:
     queue<SearcherState> open;
     queue<SearcherState> close;
-    list<SearcherState> marked;
-    stack<SearcherState> _stack;
+    list<MatrixNode> marked;
+    stack<MatrixNode> _stack;
     virtual Solution search(Problem) = 0;
     static list<MatrixNode> getNeighbors(Problem, MatrixNode);
-    bool isUnmarked(SearcherState &);
+    bool isUnmarked(MatrixNode &);
     void insertOpen(SearcherState &);
     bool inOpen(MatrixNode &);
     bool inClosed(MatrixNode &);
