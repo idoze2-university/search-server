@@ -41,8 +41,8 @@ string Solution::toString()
     };
     stringstream os;
     auto last_pos = _position{0, 0};
-    int total_cost = 0;
     bool invalid = false;
+    int total_cost = route.front().getValue();
     for (const auto &step : route)
     {
         auto pos = _position{step.getPosition().getCol(), step.getPosition().getRow()};

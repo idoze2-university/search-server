@@ -3,7 +3,7 @@ namespace boot
 {
 int Main::main(int argc, char **args)
 {
-    Searcher *srch = new searcher::DFS();
+    Searcher *srch = new searcher::BestFirstSearch();
     adapter::SearcherAdapter slv(srch);
     cache_manager::FileCacheManager<component::Problem> cm;
     client_handler::MyClientHandler c(&cm, &slv);
