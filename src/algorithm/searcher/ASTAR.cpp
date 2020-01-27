@@ -8,14 +8,15 @@ namespace searcher
 
 Solution ASTAR::search(Problem problem)
 {
-    clearAll();
+    queue<SearcherState> open;
+    queue<SearcherState> close;
     Solution solution;
     MatrixNode start = problem.getStart();
     MatrixNode goal = problem.getGoal();
     Position nullPos(-1, -1);
     MatrixNode nullNode(nullPos, -1);
     SearcherState s(0, start, nullNode);
-    insertOpen(s);
+    insertOpen(s,open);
     while (!open.empty()) {
         auto *m = new SearcherState(open.front().getCost(), *(open.front().getNode()), *(open.front().getParent()));
         open.pop();
@@ -37,13 +38,13 @@ Solution ASTAR::search(Problem problem)
         } else {
             list<MatrixNode> neighbors = getNeighbors(problem, *(m->getNode()));
             for (auto &neighbor : neighbors) {
-                if (inClosed(neighbor)) {
+                if (inClosed(neighbor,close)) {
                     continue;
                 }
-                if (!inOpen(neighbor)) {
+                if (!inOpen(neighbor,open)) {
                     auto *neighbor_state = new SearcherState(neighbor.getValue() + m->getCost(), neighbor,
                                                              *(m->getNode()));
-                    insertOpen(*neighbor_state);
+                    insertOpen(*neighbor_state,open);
                 } else {
                     auto *neighbor_state = new SearcherState(neighbor.getValue() + m->getCost(), neighbor,
                                                              *(m->getNode()));
@@ -59,7 +60,7 @@ Solution ASTAR::search(Problem problem)
                         open.pop();
                     }
                     if (replace) {
-                        insertOpen(*neighbor_state);
+                        insertOpen(*neighbor_state,open);
                     }
                 }
             }

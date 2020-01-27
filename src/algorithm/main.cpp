@@ -13,7 +13,7 @@ int main()
 {
     Problem p(37);
     cout<<p<<endl;
-    Searcher *best = new ASTAR();
+    Searcher *best = new DFS();
     auto _sol = best->search(p);
     cout << _sol << endl;
 }
