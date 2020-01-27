@@ -4,7 +4,7 @@ FILE_CACHE_DATA_DIR= ./cached_data/
 # COMPILATION #####################################################################################
 SRCS_DIRS=	src
 BUILD_DIR=	build
-EXCLUDE_D=	algorithm/_legacy algorithm/searcher/ASTAR.cpp algorithm/main.cpp demo
+EXCLUDE_D=	algorithm/_legacy algorithm/main.cpp demo
 
 ifdef EXCLUDE_D
 EXCLUDE_LAST:= 	$(lastword $(EXCLUDE_D))
@@ -17,7 +17,13 @@ OBJS:=	$(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS:=	$(OBJS:.o=.d)
 
 COMPILER=		g++
-COMP_FLAGS= 	-ggdb3 -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread -D DEBUG_OUTPUT
+COMP_FLAGS= 	-ggdb3 -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
+ifdef DEBUG
+COMP_FLAGS+= 	-D DEBUG_OUTPUT
+endif
+ifdef ALGO
+COMP_FLAGS+= 	-D USE_$(ALGO) -D USE_ALGORITHM
+endif
 INC_DIRS:=	 	$(shell find $(SRCS_DIRS) -type d)
 INC_FLAGS:=		$(addprefix -I,$(INC_DIRS)) -MMD -MP
 CPPFLAGS:=		$(INC_FLAGS) $(COMP_FLAGS)

@@ -54,7 +54,7 @@ void ParallelServer::open(int port, IClientHandler *c)
         {
             switch (errno)
             {
-            case 4:
+            case 11:
                 //this means time-out.
                 break;
             default:

@@ -2,6 +2,9 @@
 #define BOOT
 #define DEF_PORT 5600
 #include "../algorithm/searcher/BestFirstSearch.h"
+#include "../algorithm/searcher/BFS.h"
+#include "../algorithm/searcher/DFS.h"
+#include "../algorithm/searcher/ASTAR.h"
 #include "../adapter/searcher_adapter.h"
 #include "../algorithm/component/Problem.h"
 #include "../cache_manager/file_cache_manager.h"
