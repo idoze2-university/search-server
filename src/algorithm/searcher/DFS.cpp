@@ -3,7 +3,8 @@
 namespace searcher {
 
     Solution DFS::search(Problem problem) {
-        clearAll();
+        list<MatrixNode> marked;
+        stack<MatrixNode> _stack;
         int count = 0;
         Solution solution;
         MatrixNode start = problem.getStart();
@@ -23,7 +24,7 @@ namespace searcher {
             } else {
                 bool entered = false;
                 for (auto neighbor : getNeighbors(problem, *m)) {
-                    if (isUnmarked(neighbor) && !entered) {
+                    if (isUnmarked(neighbor,marked) && !entered) {
                         entered = true;
                         _stack.push(neighbor);
                         marked.push_back(neighbor);

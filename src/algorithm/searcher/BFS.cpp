@@ -7,7 +7,8 @@
 namespace searcher {
 
     Solution BFS::search(Problem problem) {
-        clearAll();
+        queue<SearcherState>open;
+        list<MatrixNode>marked;
         Solution solution{};
         MatrixNode start = problem.getStart();
         MatrixNode goal = problem.getGoal();
@@ -36,7 +37,7 @@ namespace searcher {
                 return solution;
             } else {
                 for (auto neighbor : getNeighbors(problem, *m->getNode())) {
-                    if (isUnmarked(neighbor)) {
+                    if (isUnmarked(neighbor,marked)) {
                         auto *new_state = new SearcherState(0, neighbor, *m->getNode());
                         open.push(*new_state);
                         marked.push_back(neighbor);

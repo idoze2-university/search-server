@@ -59,7 +59,7 @@ namespace searcher {
         return neighbors;
     }
 
-    void Searcher::insertOpen(SearcherState &state) {
+    void Searcher::insertOpen(SearcherState &state,queue<SearcherState>&open) {
         open.push(state);
         queue<SearcherState> tempQ;
         while (!open.empty()) {
@@ -86,7 +86,7 @@ namespace searcher {
         }
     }
 
-    bool Searcher::isUnmarked(MatrixNode &newState) {
+    bool Searcher::isUnmarked(MatrixNode &newState,list<MatrixNode>marked) {
         for (auto &marked_state : marked) {
             if (newState == marked_state) {
                 return false;
@@ -95,25 +95,7 @@ namespace searcher {
         return true;
     }
 
-    void Searcher::clearAll() {
-        int size = open.size();
-        for (int i = 0; i < size; i++) {
-            open.pop();
-        }
-        size = close.size();
-        for (int i = 0; i < size; i++) {
-            close.pop();
-        }
-        while (!_stack.empty()) {
-            _stack.pop();
-        }
-        while (!searcherState_stack.empty()) {
-            searcherState_stack.pop();
-        }
-        marked.clear();
-    }
-
-    bool Searcher::inOpen(MatrixNode &m) {
+    bool Searcher::inOpen(MatrixNode &m,queue<SearcherState>open) {
         int size = open.size();
         bool in = false;
         for (int i = 0; i < size; i++) {
@@ -126,7 +108,7 @@ namespace searcher {
         return in;
     }
 
-    bool Searcher::inClosed(MatrixNode &m) {
+    bool Searcher::inClosed(MatrixNode &m,queue<SearcherState>close) {
         int size = close.size();
         bool in = false;
         for (int i = 0; i < size; i++) {
