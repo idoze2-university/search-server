@@ -45,7 +45,9 @@ bool FileCacheManager<Problem>::isCached(Problem problem)
         return 0;
     else
     {
+#ifdef DEBUG_OUTPUT
         cout << "Reading from: " << file_name << endl;
+#endif
         return 1;
     }
 }
@@ -60,7 +62,9 @@ string FileCacheManager<Problem>::getSolutionString(Problem problem)
     _fs.open(file_name);
     solution_ss << _fs.rdbuf();
     _fs.close();
+#ifdef DEBUG_OUTPUT
     cout << "Content: " << solution_ss.str() << endl;
+#endif
     return solution_ss.str();
 }
 template <class Problem>
@@ -71,8 +75,10 @@ void FileCacheManager<Problem>::cache(Problem problem, string solution)
     ofstream _fs(file_name, ios::app);
     _fs.write(solution.c_str(), solution.length());
     _fs.close();
+#ifdef DEBUG_OUTPUT
     cout << "Writing to: " << file_name << endl;
     cout << "Data: " << (string)solution << endl;
+#endif
 }
 } // namespace cache_manager
 #endif

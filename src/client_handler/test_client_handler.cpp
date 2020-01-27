@@ -14,7 +14,9 @@ void MyTestClientHandler::handleClient(int client_socket)
         string problem(_in);
         problem.erase(std::remove(problem.begin(), problem.end(), '\n'), problem.end());
         problem.erase(std::remove(problem.begin(), problem.end(), '\r'), problem.end());
+#ifdef DEBUG_OUTPUT
         cout << "In(" << problem.length() << "): |" << problem << "|" << endl;
+#endif
         if (!problem.compare("end"))
             break;
         string solution;
@@ -29,7 +31,9 @@ void MyTestClientHandler::handleClient(int client_socket)
         }
         auto out = solution + "\n\r";
         auto is_sent = send(client_socket, out.c_str(), (u_int)out.length(), 0);
+#ifdef DEBUG_OUTPUT
         cout << "Out(" << solution.length() << "): |" << solution << "|" << endl;
+#endif
         if (is_sent == -1)
         {
             cout << "Error sending message" << endl;

@@ -1,5 +1,5 @@
-#ifndef  PARALLEL_SERVER
-#define  PARALLEL_SERVER
+#ifndef PARALLEL_SERVER
+#define PARALLEL_SERVER
 #include "server.h"
 #include <sys/socket.h>
 #include <thread>
@@ -15,7 +15,6 @@ class ParallelServer : public IServer
 {
 private:
     bool isOpen;
-    void serverListen(sockaddr_in *, int, IClientHandler *);
 
 public:
     void open(int, IClientHandler *);
