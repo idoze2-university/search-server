@@ -4,3 +4,5 @@ cached_data
 test/matricies
 test/*_solutions/
 a.out
+*_solutions/
+matricies

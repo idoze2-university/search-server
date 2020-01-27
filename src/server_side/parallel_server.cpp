@@ -18,7 +18,7 @@ void ParallelServer::open(int port, IClientHandler *c)
     address.sin_port = htons(port);
     struct timeval tv
     {
-        60, 0
+        10, 0
     };
     setsockopt(server_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof tv);
 //the actual bind command
@@ -37,9 +37,9 @@ void ParallelServer::open(int port, IClientHandler *c)
         sleep(0.7);
     }
     isOpen = true;
+    auto timeout_cout = 0;
     while (isOpen)
     {
-        cout << "Now listening for connection." << endl;
         //making socket listen to the port
         if (listen(server_socket, 5) == -1)
         {
@@ -55,7 +55,9 @@ void ParallelServer::open(int port, IClientHandler *c)
             switch (errno)
             {
             case 11:
-                //this means time-out.
+                if (timeout_cout == 2)
+                    exit(0);
+                timeout_cout++;
                 break;
             default:
                 std::cerr << "Error accepting client: " << errno << std::endl;
