@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 def gen_mat(N):
     from random import randint
     mat = list(list(str(randint(-1, 9)) for cell in range(N + 1)) for row in range(N + 1))
@@ -15,7 +17,7 @@ def gen_matricies(lower_bound, upper_bound, step=1):
     for N in range(lower_bound, upper_bound, step):
         with open(file_name_format % (N, N), 'w') as _f:
             _f.write(gen_mat(N))
-            _f.close()
+            _f.close(x
 
 
 if __name__ == '__main__':

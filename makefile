@@ -17,7 +17,7 @@ OBJS:=	$(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS:=	$(OBJS:.o=.d)
 
 COMPILER=		g++
-COMP_FLAGS= 	-ggdb3 -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread
+COMP_FLAGS= 	-ggdb3 -std=c++14 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -pthread -D DEBUG_OUTPUT
 INC_DIRS:=	 	$(shell find $(SRCS_DIRS) -type d)
 INC_FLAGS:=		$(addprefix -I,$(INC_DIRS)) -MMD -MP
 CPPFLAGS:=		$(INC_FLAGS) $(COMP_FLAGS)

@@ -15,7 +15,9 @@ void MyClientHandler::handleClient(int client_socket)
         _in_line.erase(std::remove(_in_line.begin(), _in_line.end(), ' '), _in_line.end());
         if (!_in_line.compare("end"))
             break;
+#ifdef DEBUG_OUTPUT
         cout << "In: |" << _in_line << "|" << endl;
+#endif
         stringstream _in_line_stream(_in_line);
         int col = 0;
         if ((!row) || (size_initialized && row < problem.getSize()))
@@ -50,6 +52,9 @@ void MyClientHandler::handleClient(int client_socket)
     }
     auto out_str = solution_str + "\r";
     auto is_sent = send(client_socket, (out_str.c_str()), (u_int)out_str.length(), 0);
+#ifdef DEBUG_OUTPUT
+    cout << "Out(" << solution_str.length() << "): |" << solution_str << "|" << endl;
+#endif
     if (is_sent == -1)
     {
         cout << "Error sending message" << endl;
