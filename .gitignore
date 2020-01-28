@@ -1,8 +1,6 @@
 .idea
 build
 cached_data
-test/matricies
-test/*_solutions/
 a.out
 *_solutions/
-matricies
+benchmark/data/*.out
