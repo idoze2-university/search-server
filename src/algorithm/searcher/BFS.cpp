@@ -9,6 +9,7 @@ namespace searcher {
     Solution BFS::search(Problem problem) {
         queue<SearcherState>open;
         list<MatrixNode>marked;
+        stack<SearcherState> searcherState_stack;
         Solution solution{};
         MatrixNode start = problem.getStart();
         MatrixNode goal = problem.getGoal();

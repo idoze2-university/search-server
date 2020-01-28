@@ -13,7 +13,6 @@ using namespace std;
 namespace searcher {
     class Searcher {
     public:
-        stack<SearcherState> searcherState_stack;
 
         virtual Solution search(Problem) = 0;
 
