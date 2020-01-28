@@ -8,7 +8,7 @@ DEFAULT_TARGET_IP = 'localhost'
 DEFAULT_TARGET_PORT = 5600
 MATRIX_FOLDER_NAME = 'data/matricies/'
 SOLUTION_FOLDER_NAME = ''
-DEFAULT_BUFFER_SIZE = 4096
+DEFAULT_BUFFER_SIZE = 2**14
 DEFAULT_SLEEP_TIME = 0.1
 
 
@@ -106,7 +106,7 @@ def generate_matrices(lower_bound, upper_bound, step=1):
     """
     out_list = []
     for N in range(lower_bound, upper_bound, step):
-        out_list.extend(list(RandomMatrix(N, id) for id in range(1, 6)))
+        out_list.extend(list(RandomMatrix(N, id) for id in range(1, 10)))
     return out_list
 
 
@@ -119,7 +119,7 @@ def generate_data():
         mats = get_matrices()
     else:
         os.makedirs(MATRIX_FOLDER_NAME)
-        mats = generate_matrices(10, 71, 10)
+        mats = generate_matrices(10, 51, 10)
         for m in mats:
             m.write()
 

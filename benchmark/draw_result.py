@@ -4,7 +4,7 @@ import os
 
 ALGORITHMS = [
     'BEST',
-    # 'DFS',
+    'DFS',
     'BFS',
     'ASTAR'
 ]
@@ -57,7 +57,7 @@ def create_graph():
     plt.xlabel("N")
     plt.ylabel("avg. Nodes in solution");
     plt.legend()
-    plt.savefig('result.png')
+    plt.savefig('result1.png')
 
 
 if __name__ == '__main__':
