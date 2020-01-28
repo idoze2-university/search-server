@@ -14,7 +14,7 @@ int Main::main(int argc, char **args)
     Searcher *srch = new searcher::ASTAR();
 #endif
 #else
-    Searcher *srch = new searcher::BestFirstSearch();
+    Searcher *srch = new searcher::BFS();
 #endif
     adapter::SearcherAdapter slv(srch);
     cache_manager::FileCacheManager<component::Problem> cm;

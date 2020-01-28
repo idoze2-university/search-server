@@ -1,6 +1,6 @@
 # CONSTANTS #######################################################################################
 FILE_CACHE_DATA_DIR= ./cached_data/
-PORT = 5600
+PORT = 5400
 # COMPILATION #####################################################################################
 SRCS_DIRS=	src
 BUILD_DIR=	build
@@ -58,7 +58,7 @@ run: a.out
 # EXTRA TARGETS ###################################################################################
 .PHONY: clean
 clean: clean_cache clean_benchmark_data
-	@rm -rf $(BUILD_DIR)
+	@rm -rf $(BUILD_DIR) *.out
 
 .PHONY: clean_cache
 clean_cache:
@@ -67,40 +67,49 @@ clean_cache:
 # BENCHMARK #######################################################################################
 BENCHMARK_FOLDER = benchmark
 BENCHMARK_DATA = $(BENCHMARK_FOLDER)/data
-ALGORITHMS = BEST DFS BFS ASTAR
+ALGORITHMS = BEST \
+ASTAR \
+BFS
+# DFS
 
 .PHONY: $(ALGORITHMS)
-$(ALGORITHMS):
-	@echo 'Generating $@ algorithm results...'
+$(ALGORITHMS): clean_cache
+	@echo -n "[ ] Generating $@ algorithm results...\r"
 	@rm -f build/src/boot/boot.cpp.o
 	@$(MAKE) -s ALGO=$@ compile > /dev/null
 	@mkdir -p $(BENCHMARK_DATA)/
 	@mv $@.out $(BENCHMARK_DATA)/.
 	@./$(BENCHMARK_DATA)/$@.out $(PORT) & \
 	cd $(BENCHMARK_FOLDER) ; \
-	python3 benchmark_client.py --algorithm '$@' --target-port $(PORT)
+	python3 benchmark_client.py --algorithm '$@' --target-port $(PORT) >/dev/null 2>&1
 	@rm -f $(BENCHMARK_DATA)/$@.out
-	@fuser -k $(PORT)/tcp 2>&1 /dev/null
+	@fuser -k $(PORT)/tcp >/dev/null 2>&1
+	@echo -n "[X\n\r"
 
 .PHONY: generate_benchmark_data
 generate_benchmark_data: clean_benchmark_data
 	@PORT=5600 ;\
 		for alg in $(ALGORITHMS); do \
-	$(MAKE) -s PORT=$$((PORT)) $$alg & \
+	$(MAKE) -s PORT=$$((PORT)) $$alg ; \
 	PORT=$$((PORT+1)) ;\
-	sleep 5 ;\
-	done && \
-	wait
+	done
 
 .PHONY: benchmark
 benchmark:
 	@echo '### BEGIN BENCHMARK ####'
 	@$(MAKE) -s generate_benchmark_data
+	@$(MAKE) -s $(BENCHMARK_FOLDER)/result.png
 	@echo '### END BENCHMARK ####'
 
+$(BENCHMARK_FOLDER)/result.png:
+	@echo '### NOW DRAWING BENCHMARK RESULT GRAPH ####'
+	@-cd $(BENCHMARK_FOLDER) ; \
+	python3 draw_result.py 2>/dev/null ; \
+	echo '### RESULT GRAP DRAWN AT $@ ####'
+	@rm -rf data
 
 
 .PHONY: clean_benchmark_data
 clean_benchmark_data:
-	@rm -rf $(BENCHMARK_DATA)
+	@rm -rf $(BENCHMARK_DATA)/*solutions $(BENCHMARK_FOLDER)/result.png
 ###################################################################################################
